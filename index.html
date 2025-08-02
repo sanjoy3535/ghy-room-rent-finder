@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guwahati Room Rent Finder</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 1s ease-out forwards;
+    }
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+    /* Gradient Background */
+    .gradient-bg {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .hero-form {
+        grid-template-columns: 1fr !important;
+      }
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .popular-areas-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .featured-listings-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .testimonials-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    @media (min-width: 641px) and (max-width: 1024px) {
+      .popular-areas-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      .featured-listings-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    h2 {
+      font-size: 60px;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-shadow:
+        1px 1px 0 #f0f,
+        2px 2px 0 #0ff,
+        3px 3px 0 #f0f,
+        4px 4px 0 #0ff,
+        5px 5px 0 #f0f;
+      animation: jump 1s ease-in-out infinite;
+    }
+    @keyframes jump {
+      0% {
+        transform: translateY(0) scale(1) rotateX(0deg);
+        text-shadow:
+          1px 1px 0 #f0f,
+          2px 2px 0 #0ff,
+          3px 3px 0 #f0f,
+          4px 4px 0 #0ff,
+          5px 5px 0 #f0f;
+      }
+      50% {
+        transform: translateY(-40px) scale(1.1) rotateX(10deg);
+        text-shadow:
+          2px 10px 5px rgba(0, 255, 255, 0.3),
+          4px 20px 10px rgba(255, 0, 255, 0.2);
+      }
+      100% {
+        transform: translateY(0) scale(1) rotateX(0deg);
+      }
+    }
+    .signin-btn {
+      background: #5744E6;
+      color: #111;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: width 0.4s ease, background 0.4s;
+      width: 50px;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .signin-btn i {
+      fontირ: none; font-size: 18px; transition: transform 0.3s;
+    }
+    .signin-btn span {
+      margin-left: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .signin-btn:hover {
+      width: 111px;
+      background: #5744E6;
+    }
+    .signin-btn:hover span {
+      opacity: 1;
+    }
+    /* Hamburger Menu Styles */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      justify-content: space-between;
+    }
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background-color: #4b5563;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+    .nav-links {
+      transition: all 0.3s ease-in-out;
+    }
+    @media (max-width: 640px) {
+      .hamburger {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        width: 100%;
+        background-color: #fff;
+        position: absolute;
+        top: 64px;
+        top: clamp(64px, 15vw, 72px);
+        left: 0;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba("0, 0, Ascent, 0 4px  -2px -2px rgba(0, 0, 0, 0.25");
+      }
+      .nav-links.active {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans bg-gray-50">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 py-4 items-center">
+        <div class="flex items-center">
+          <img src="https://via.placeholder.com/40" alt="Logo" class="h-10 w-10">
+          <h1 class="text-xl sm:text-2xl font-bold text-indigo-600 ml-2">GHY Room Finder</h1>
+        </div>
+        <div class="hamburger sm:hidden">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="nav-links flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 mt-4 sm:mt-0">
+          <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Home</a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">Listings</a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium">About</a>
+          <a href="#" class="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition signin-btn">
+            <i class="fas fa-sign-in-alt"style='color:white'></i>
+            <span style='color:white'>Sign In</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="gradient-bg text-white py-12 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fadeIn">
+      <h2 class="text-3xl sm:text-5xl font-extrabold mb-6">Discover Your Dream Room in Guwahati</h2>
+      <p class="text-lg sm:text-xl mb-8 sm:mb-10 max-w-2xl mx-auto">Find affordable PGs, flats, and shared rooms with our easy-to-use platform.</p>
+      <div class="max-w-3xl mx-auto bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+        <form class="grid grid-cols-1 sm:grid-cols-3 gap-4 hero-form">
+          <input type="text" placeholder="Search by area (e.g., Beltola)" class="px-4 py-3 rounded-md text-gray-900 border border-gray-300 focus:ring-2 focus:ring-indigo-600 w-full">
+          <select class="px-4 py-3 rounded-md text-gray-900 border border-gray-300 focus:ring-2 focus:ring-indigo-600 w-full">
+            <option value="">Room Type</option>
+            <option value="pg">PG</option>
+            <option value="flat">Flat</option>
+            <option value="shared">Shared Room</option>
+          </select>
+          <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition w-full">Find Rooms</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Areas -->
+  <section class="py-12 sm:py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">Explore Popular Areas in Guwahati</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 popular-areas-grid">
+        <div class="bg-gray-100 rounded-lg p-6 text-center hover-scale">
+          <img src="https://via.placeholder.com/100" alt="Beltola" class="h-16 sm:h-20 w-16 sm:w-20 mx-auto rounded-full object-cover">
+          <h4 class="text-md sm:text-lg font-semibold text-gray-800 mt-4">Beltola</h4>
+          <p class="text-gray-600 text-sm">Vibrant locality with great connectivity.</p>
+        </div>
+        <div class="bg-gray-100 rounded-lg p-6 text-center hover-scale">
+          <img src="https://via.placeholder.com/100" alt="Zoo Road" class="h-16 sm:h-20 w-16 sm:w-20 mx-auto rounded-full object-cover">
+          <h4 class="text-md sm:text-lg font-semibold text-gray-800 mt-4">Zoo Road</h4>
+          <p class="text-gray-600 text-sm">Close to colleges and markets.</p>
+        </div>
+        <div class="bg-gray-100 rounded-lg p-6 text-center hover-scale">
+          <img src="https://via.placeholder.com/100" alt="Ganeshguri" class="h-16 sm:h-20 w-16 sm:w-20 mx-auto rounded-full object-cover">
+          <h4 class="text-md sm:text-lg font-semibold text-gray-800 mt-4">Ganeshguri</h4>
+          <p class="text-gray-600 text-sm">Bustling hub with all amenities.</p>
+        </div>
+        <div class="bg-gray-100 rounded-lg p-6 text-center hover-scale">
+          <img src="https://via.placeholder.com/100" alt="Six Mile" class="h-16 sm:h-20 w-16 sm:w-20 mx-auto rounded-full object-cover">
+          <h4 class="text-md sm:text-lg font-semibold text-gray-800 mt-4">Six Mile</h4>
+          <p class="text-gray-600 text-sm">Modern area with premium rentals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Listings -->
+  <section class="py-12 sm:py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">Featured Rooms & PGs</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 featured-listings-grid">
+        <!-- Card 1 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover-scale">
+          <img src="https://via.placeholder.com/400x200" alt="Room" class="w-full h-40 sm:h-48 object-cover">
+          <div class="p-4 sm:p-6">
+            <h4 class="text-lg sm:text-xl font-semibold text-gray-800">1BHK Flat in Beltola</h4>
+            <p class="text-indigo-600 font-bold mt-2">₹9,000/month</p>
+            <p class="text-gray-600 text-sm mt-2">Furnished, 24/7 water, near NH-27.</p>
+            <div class="flex items-center mt-4">
+              <span class="text-yellow-400">★★★★☆</span>
+              <span class="text-gray-500 text-sm ml-2">(4.5)</span>
+            </div>
+            <a href="#" class="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700">View Details</a>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover-scale">
+          <img src="https://via.placeholder.com/400x200" alt="Room" class="w-full h-40 sm:h-48 object-cover">
+          <div class="p-4 sm:p-6">
+            <h4 class="text-lg sm:text-xl font-semibold text-gray-800">PG in Zoo Road</h4>
+            <p class="text-indigo-600 font-bold mt-2">₹7,000/month</p>
+            <p class="text-gray-600 text-sm mt-2">Wi-Fi, AC, meals included.</p>
+            <div class="flex items-center mt-4">
+              <span class="text-yellow-400">★★★★★</span>
+              <span class="text-gray-500 text-sm ml-2">(5.0)</span>
+            </div>
+            <a href="#" class="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700">View Details</a>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover-scale">
+          <img src="https://via.placeholder.com/400x200" alt="Room" class="w-full h-40 sm:h-48 object-cover">
+          <div class="p-4 sm:p-6">
+            <h4 class="text-lg sm:text-xl font-semibold text-gray-800">Shared Room in Ganeshguri</h4>
+            <p class="text-indigo-600 font-bold mt-2">₹4,500/month</p>
+            <p class="text-gray-600 text-sm mt-2">Spacious, balcony, near malls.</p>
+            <div class="flex items-center mt-4">
+              <span class="text-yellow-400">★★★★☆</span>
+              <span class="text-gray-500 text-sm ml-2">(4.2)</span>
+            </div>
+            <a href="#" class="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-12 sm:py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 text-center">What Our Users Say</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 testimonials-grid">
+        <div class="bg-gray-100 p-4 sm:p-6 rounded-xl shadow-md">
+          <p class="text-gray-600 italic text-sm sm:text-base">"Found a perfect PG in Beltola within a day! The search was so easy and the listings were detailed."</p>
+          <div class="flex items-center mt-4">
+            <img src="https://via.placeholder.com/50" alt="User" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover">
+            <div class="ml-4">
+              <h4 class="text-gray-800 font-semibold text-sm sm:text-base">Priya Sharma</h4>
+              <p class="text-gray-500 text-xs sm:text-sm">Student</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-100 p-4 sm:p-6 rounded-xl shadow-md">
+          <p class="text-gray-600 italic text-sm sm:text-base">"Posted my flat ad and got tenants within a week. Highly recommend this platform!"</p>
+          <div class="flex items-center mt-4">
+            <img src="https://via.placeholder.com/50" alt="User" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover">
+            <div class="ml-4">
+              <h4 class="text-gray-800 font-semibold text-sm sm:text-base">Rahul Das</h4>
+              <p class="text-gray-500 text-xs sm:text-sm">Property Owner</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="gradient-bg text-white py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fadeIn">
+      <h3 class="text-2xl sm:text-4xl font-bold mb-6">Ready to Find or List Your Room?</h3>
+      <p class="text-base sm:text-lg mb-6 sm:mb-8 max-w-xl mx-auto">Join thousands of users finding their perfect space in Guwahati.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#" class="bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg hover:bg-gray-100 transition">Search Rooms</a>
+        <a href="#" class="bg-indigo-600 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg hover:bg-indigo-700 transition">Post Ad</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-8 sm:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8 footer-grid">
+        <div>
+          <h4 class="text-lg sm:text-xl font-bold text-indigo-400">Guwahati Room Finder</h4>
+          <p class="text-gray-400 mt-4 text-sm sm:text-base">Your one-stop solution for finding rooms, PGs, and flats in Guwahati.</p>
+        </div>
+        <div>
+          <h4 class="text-base sm:text-lg font-semibold">Quick Links</h4>
+          <ul class="mt-4 space-y-2 text-sm sm:text-base">
+            <li><a href="#" class="text-gray-400 hover:text-indigo-400">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-indigo-400">Listings</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-indigo-400">About Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-base sm:text-lg font-semibold">Support</h4>
+          <ul class="mt-4 space-y-2 text-sm sm:text-base">
+            <li><a href="#" class="text-gray-400 hover:text-indigo-400">Contact Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-indigo-400">FAQ</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-indigo-400">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-base sm:text-lg font-semibold">Contact</h4>
+          <p class="text-gray-400 mt-4 text-sm sm:text-base">Email: support@guwahatiroomfinder.com</p>
+          <p class="text-gray-400 text-sm sm:text-base">Phone: +91 987 654 3210</p>
+          <div class="flex space-x-4 mt-4">
+            <a href="#" class="text-gray-400 hover:text-indigo-400"><svg class="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.5c-.9.4-1.8.7-2.8.8 1-.6 1.8-1.6 2.2-2.7-.9.5-2 .9-3.1 1.1-1-.9-2.3-1.5-3.8-1.5-2.9 0-5.2 2.4-5.2 5.3 0 .4 0 .8.1 1.2-4.3-.2-8.1-2.3-10.7-5.5-.4.7-.7 1.6-.7 2.5 0 1.8.9 3.4 2.3 4.3-.8 0-1.6-.2-2.3-.6v.1c0 2.5 1.8 4.6 4.2 5.1-.4.1-.9.2-1.3.2-.3 0-.6 0-.9-.1.6 2 2.4 3.4 4.5 3.4-1.7 1.3-3.8 2.1-6.1 2.1-.4 0-.8 0-1.2-.1 2.2 1.4 4.8 2.2 7.6 2.2 9.1 0 14.1-7.5 14.1-14 0-.2 0-.4 0-.6 1-.7 1.8-1.6 2.5-2.6z"/></svg></a>
+            <a href="#" class="text-gray-400 hover:text-indigo-400"><svg class="h-5 w-5 sm:h-6 sm:w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.6 15.8c-.4.4-.9.6-1.4.6H8.8c-.5 0-1-.2-1.4-.6-.4-.4-.6-.9-.6-1.4V10c0-.5.2-1 .6-1.4.4-.4.9-.6 1.4-.6h6.4c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4v6.4c0 .5-.2 1-.6 1.4zm-3.8-9.2c-.7 0-1.3.6-1.3 1.3s.6 1.3 1.3 1.3 1.3-.6 1.3-1.3-.6-1.3-1.3-1.3z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-gray-400 mt-8 sm:mt-12 text-sm sm:text-base">&copy; 2025 Guwahati Room Finder. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      if (navLinks.classList.contains('active')) {
+        navLinks.style.display = 'flex';
+      } else {
+        navLinks.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
